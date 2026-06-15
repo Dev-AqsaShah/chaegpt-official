@@ -1,0 +1,46 @@
+
+> chaegpt-official@0.1.0 dev
+> next dev --webpack --port 3000
+
+▲ Next.js 16.2.9 (webpack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.2.138:3000
+- Environments: .env
+✓ Ready in 2.5s
+
+○ Compiling / ...
+ GET / 200 in 32.5s (next.js: 21.8s, application-code: 10.7s)
+ GET / 200 in 3.8s (next.js: 644ms, application-code: 3.2s)
+ GET / 200 in 1230ms (next.js: 212ms, application-code: 1018ms)
+○ Compiling /menu ...
+ GET /menu 200 in 16.6s (next.js: 9.6s, application-code: 7.0s)
+○ Compiling /login ...
+ GET /login 200 in 5.4s (next.js: 5.0s, application-code: 445ms)
+ GET /register 200 in 1984ms (next.js: 1585ms, application-code: 399ms)
+ GET /reservations 200 in 3.3s (next.js: 2.6s, application-code: 723ms)
+○ Compiling /contact ...
+ GET /contact 200 in 7.8s (next.js: 6.8s, application-code: 965ms)
+○ Compiling /checkout ...
+ GET /checkout 200 in 10.8s (next.js: 9.2s, application-code: 1526ms)
+○ Compiling /account ...
+⨯ TypeError: Cannot read properties of null (reading 'user')
+    at AccountPage (src\app\account\page.tsx:23:31)
+  21 |   const session = await auth();
+  22 |   const orders = await prisma.order.findMany({
+> 23 |     where: { userId: session!.user!.id },
+     |                               ^
+  24 |     include: { items: true },
+  25 |     orderBy: { createdAt: "desc" },
+  26 |     take: 20, {
+  digest: '336051559'
+}
+ GET /account 307 in 34.7s (next.js: 24.8s, application-code: 9.9s)
+○ Compiling /admin ...
+ GET /admin 307 in 10.4s (next.js: 5.6s, application-code: 4.8s)
+○ Compiling /api/auth/[...nextauth] ...
+ GET /api/auth/providers 200 in 4.7s (next.js: 3.7s, application-code: 1062ms)
+○ Compiling /api/coupon ...
+ GET /api/coupon?code=WELCOME10 405 in 3.7s (next.js: 3.7s, application-code: 42ms)
+ POST /api/coupon 200 in 171ms (next.js: 7ms, application-code: 164ms)
+○ Compiling /menu ...
+ GET /menu 200 in 12.9s (next.js: 10.4s, application-code: 2.5s)
