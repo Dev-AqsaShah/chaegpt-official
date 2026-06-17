@@ -78,7 +78,14 @@ export function MenuItemDetail({ item }: { item: MenuItem }) {
         {/* Image */}
         <div className="relative aspect-square overflow-hidden rounded-2xl bg-muted">
           {item.image ? (
-            <Image src={item.image} alt={item.name} fill className="object-cover" />
+            <Image
+              src={item.image}
+              alt={item.name}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
+              priority
+            />
           ) : (
             <div className="flex h-full w-full items-center justify-center text-8xl">
               {item.category.emoji ?? "☕"}

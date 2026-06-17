@@ -69,9 +69,9 @@ export function Footer() {
             <ul className="space-y-2 text-sm text-muted-foreground">
               {[
                 { label: "Menu", href: "/menu" },
-                { label: "Order Online", href: "/menu" },
                 { label: "Reservations", href: "/reservations" },
                 { label: "Contact", href: "/contact" },
+                { label: "My Account", href: "/account" },
               ].map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} className="hover:text-primary transition-colors">
