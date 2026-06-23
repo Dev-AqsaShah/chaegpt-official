@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { prisma } from "@/lib/prisma";
 import { MenuPageClient } from "@/components/menu/MenuPageClient";
 import type { Metadata } from "next";
@@ -18,5 +19,9 @@ export default async function MenuPage() {
     }),
   ]);
 
-  return <MenuPageClient categories={categories} items={items} />;
+  return (
+    <Suspense>
+      <MenuPageClient categories={categories} items={items} />
+    </Suspense>
+  );
 }

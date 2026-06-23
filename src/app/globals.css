@@ -158,3 +158,41 @@ html {
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: oklch(0.12 0 0); }
 ::-webkit-scrollbar-thumb { background: oklch(0.51 0.23 27); border-radius: 3px; }
+
+/* ── Site-wide animated background blobs ── */
+@keyframes drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(4vw, 3vh) scale(1.1); }
+  66% { transform: translate(-3vw, 5vh) scale(0.95); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-5vw, -2vh) scale(1.05); }
+  66% { transform: translate(3vw, -4vh) scale(0.92); }
+}
+@keyframes drift-c {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(2vw, -3vh) scale(1.08); }
+}
+@keyframes bg-pan {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+.animated-bg-blob-a { animation: drift-a 22s ease-in-out infinite; }
+.animated-bg-blob-b { animation: drift-b 28s ease-in-out infinite; }
+.animated-bg-blob-c { animation: drift-c 18s ease-in-out infinite; }
+.animated-bg-pan {
+  background-size: 200% 200%;
+  animation: bg-pan 30s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-bg-blob-a,
+  .animated-bg-blob-b,
+  .animated-bg-blob-c,
+  .animated-bg-pan {
+    animation: none;
+  }
+}

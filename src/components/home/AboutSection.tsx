@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Coffee, Users, Truck, Armchair } from "lucide-react";
+import { ScrollTextReveal } from "@/components/shared/ScrollTextReveal";
 
 const features = [
   { icon: Coffee, title: "Craft Chai", desc: "Every chai brewed fresh — from Doodh Patti to Kashmiri Pink." },
@@ -27,15 +28,16 @@ export function AboutSection() {
               <br />
               <span className="text-primary">A whole vibe.</span>
             </h2>
-            <p className="mt-4 text-muted-foreground text-lg leading-relaxed">
-              Chae GPT opened right opposite Mehran University because we believe the best
-              ideas — and the best chai — happen together. Whether you're cramming before
-              exams, meeting friends, or just need a break, we've got a seat for you.
-            </p>
-            <p className="mt-3 text-muted-foreground leading-relaxed">
-              Bold flavours, original recipes, and an energy that keeps Jamshoro buzzing
-              from 11 AM to 2 AM — every single day.
-            </p>
+            <ScrollTextReveal
+              text="Chae GPT opened right opposite Mehran University because we believe the best ideas — and the best chai — happen together. Whether you're cramming before exams, meeting friends, or just need a break, we've got a seat for you."
+              highlightWords={["Chae", "GPT", "chai", "Mehran"]}
+              className="mt-4 text-muted-foreground text-lg leading-relaxed"
+            />
+            <ScrollTextReveal
+              text="Bold flavours, original recipes, and an energy that keeps Jamshoro buzzing from 11 AM to 2 AM — every single day."
+              highlightWords={["Jamshoro"]}
+              className="mt-3 text-muted-foreground leading-relaxed"
+            />
           </motion.div>
 
           {/* Feature grid */}

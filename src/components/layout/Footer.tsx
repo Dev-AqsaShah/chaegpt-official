@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { MapPin, Mail, Clock } from "lucide-react";
 import { siteConfig } from "@/data/site";
 
@@ -25,9 +26,13 @@ export function Footer() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="space-y-3">
-            <h3 className="font-display text-2xl font-black uppercase text-primary">
-              ChaeGPT
-            </h3>
+            <Image
+              src="/chaigpt-logo.jpg"
+              alt="Chae GPT logo"
+              width={48}
+              height={48}
+              className="rounded-full object-cover"
+            />
             <p className="text-sm text-muted-foreground">{siteConfig.tagline}</p>
             <div className="flex gap-3">
               <a

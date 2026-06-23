@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "@/components/layout/Providers";
+import { AnimatedBackground } from "@/components/shared/AnimatedBackground";
 import { siteConfig } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className="h-full antialiased"
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <AnimatedBackground />
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -11,7 +11,7 @@ export const siteConfig = {
     address:
       "Plot A-306, Jamshoro Society Phase 3, Near The City School, Opposite Mehran University, Jamshoro, Sindh, Pakistan",
     email: "chaigptofficial@gmail.com",
-    phone: "+92-300-0000000", // confirm with owner
+    phone: "0314 0339545",
     mapEmbedUrl:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3601.8!2d68.276!3d25.428!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDI1JzQwLjgiTiA2OMKwMTYnMzMuNiJF!5e0!3m2!1sen!2spk!4v1700000000000",
   },
@@ -34,8 +34,7 @@ export const siteConfig = {
   // Paste real Instagram/TikTok post URLs here for the social feed section.
   // Format: { platform: "instagram" | "tiktok", url: "https://..." }
   featuredPosts: [
-    // { platform: "instagram", url: "https://www.instagram.com/p/EXAMPLE/" },
-    // { platform: "tiktok", url: "https://www.tiktok.com/@_chaigpt_/video/EXAMPLE" },
+    { platform: "instagram", url: "https://www.instagram.com/reel/DZTpKuLoS2g/" },
   ] as { platform: "instagram" | "tiktok"; url: string }[],
 };
 

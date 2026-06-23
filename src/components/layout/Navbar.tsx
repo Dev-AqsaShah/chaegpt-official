@@ -1,14 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { ShoppingCart, Menu, X, Sun, Moon, User, LogOut } from "lucide-react";
-import { useState } from "react";
+import { ShoppingCart, Menu, X, Sun, Moon, User, LogOut, Phone } from "lucide-react";
+import { useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/store/cart";
-import { navLinks } from "@/data/site";
+import { navLinks, siteConfig } from "@/data/site";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -25,20 +26,42 @@ export function Navbar() {
   const { theme, setTheme } = useTheme();
   const { itemCount, openCart } = useCart();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const count = itemCount();
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/90 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6">
+    <header
+      className={cn(
+        "sticky top-0 z-50 w-full border-b transition-all duration-300",
+        scrolled
+          ? "border-border/50 bg-background/90 py-2 shadow-sm backdrop-blur-md"
+          : "border-transparent bg-background/60 py-3.5 backdrop-blur-sm"
+      )}
+    >
+      <div className="mx-auto grid max-w-7xl grid-cols-2 items-center px-4 md:grid-cols-3 md:px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <span className="font-display text-2xl font-black uppercase tracking-tight text-primary leading-none">
-            Chae<span className="text-foreground">GPT</span>
-          </span>
+          <motion.div animate={{ scale: scrolled ? 0.88 : 1 }} transition={{ duration: 0.25 }}>
+            <Image
+              src="/chaigpt-logo.jpg"
+              alt="Chae GPT logo"
+              width={44}
+              height={44}
+              className="rounded-full object-cover"
+              priority
+            />
+          </motion.div>
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-6 md:flex">
+        {/* Desktop nav — centered */}
+        <nav className="hidden items-center justify-center gap-6 md:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -54,7 +77,16 @@ export function Navbar() {
         </nav>
 
         {/* Right actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-end gap-1.5">
+          {/* Phone pill — desktop only */}
+          <a
+            href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`}
+            className="mr-1 hidden items-center gap-1.5 rounded-full border border-border/60 px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary lg:flex"
+          >
+            <Phone className="h-3 w-3" />
+            {siteConfig.contact.phone}
+          </a>
+
           {/* Theme toggle */}
           <Button
             variant="ghost"
@@ -76,9 +108,13 @@ export function Navbar() {
           >
             <ShoppingCart className="h-5 w-5" />
             {count > 0 && (
-              <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
+              <motion.span
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground"
+              >
                 {count}
-              </span>
+              </motion.span>
             )}
           </Button>
 
@@ -133,7 +169,7 @@ export function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="overflow-hidden border-t border-border/50 md:hidden"
+            className="overflow-hidden border-t border-border/50 bg-background md:hidden"
           >
             <nav className="flex flex-col gap-1 px-4 py-3">
               {navLinks.map((link) => (
@@ -149,6 +185,12 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
+              <a
+                href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`}
+                className="mt-1 flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground"
+              >
+                <Phone className="h-3.5 w-3.5" /> {siteConfig.contact.phone}
+              </a>
               {!session && (
                 <Link
                   href="/login"

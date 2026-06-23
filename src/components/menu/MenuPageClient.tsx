@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -45,8 +46,14 @@ const sectionVariants = {
 };
 
 export function MenuPageClient({ categories, items }: Props) {
+  const searchParams = useSearchParams();
+  const catParam = searchParams.get("cat");
+  const initialCategory = catParam
+    ? categories.find((c) => c.slug === catParam)?.id ?? "all"
+    : "all";
+
   const [search, setSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState<string>("all");
+  const [activeCategory, setActiveCategory] = useState<string>(initialCategory);
   const [vegOnly, setVegOnly] = useState(false);
 
   const filtered = useMemo(() => {

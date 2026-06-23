@@ -1,6 +1,8 @@
 import { Hero } from "@/components/home/Hero";
+import { CategoriesShowcase } from "@/components/home/CategoriesShowcase";
 import { SignatureDrinksStrip } from "@/components/home/SignatureDrinksStrip";
 import { AboutSection } from "@/components/home/AboutSection";
+import { GallerySection } from "@/components/home/GallerySection";
 import { SocialFeedSection } from "@/components/social/SocialFeedSection";
 import { ReviewsSection } from "@/components/home/ReviewsSection";
 import { LocationSection } from "@/components/home/LocationSection";
@@ -22,11 +24,18 @@ export default async function HomePage() {
     orderBy: { sortOrder: "asc" },
   });
 
+  const categories = await prisma.category.findMany({
+    orderBy: { sortOrder: "asc" },
+    include: { _count: { select: { items: true } } },
+  });
+
   return (
     <>
       <Hero />
+      <CategoriesShowcase categories={categories} />
       <SignatureDrinksStrip items={signatureItems} />
       <AboutSection />
+      <GallerySection />
       <SocialFeedSection />
       <ReviewsSection reviews={reviews} />
       <LocationSection />
