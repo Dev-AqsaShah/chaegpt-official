@@ -1,4 +1,13 @@
+"use client";
+
+import { useEffect } from "react";
 import { siteConfig } from "@/data/site";
+
+declare global {
+  interface Window {
+    instgrm?: { Embeds: { process: () => void } };
+  }
+}
 
 function InstagramIcon({ className }: { className?: string }) {
   return (
@@ -13,6 +22,30 @@ function InstagramIcon({ className }: { className?: string }) {
 
 export function SocialFeedSection() {
   const hasPosts = siteConfig.featuredPosts.length > 0;
+  const hasInstagram = hasPosts && siteConfig.featuredPosts.some((p) => p.platform === "instagram");
+
+  // Load and run Instagram's embed script only after hydration is done,
+  // so it can't race React and swap blockquote -> iframe mid-hydration.
+  useEffect(() => {
+    if (!hasInstagram) return;
+
+    const process = () => window.instgrm?.Embeds.process();
+
+    if (window.instgrm) {
+      process();
+      return;
+    }
+
+    let script = document.querySelector<HTMLScriptElement>('script[src*="instagram.com/embed.js"]');
+    if (!script) {
+      script = document.createElement("script");
+      script.src = "https://www.instagram.com/embed.js";
+      script.async = true;
+      document.body.appendChild(script);
+    }
+    script.addEventListener("load", process);
+    return () => script?.removeEventListener("load", process);
+  }, [hasInstagram]);
 
   return (
     <section className="py-16 bg-background">
@@ -76,12 +109,6 @@ export function SocialFeedSection() {
           </div>
         )}
       </div>
-
-      {/* Instagram embed script — only loads if posts are present */}
-      {hasPosts && siteConfig.featuredPosts.some((p) => p.platform === "instagram") && (
-        // eslint-disable-next-line @next/next/no-sync-scripts
-        <script async src="//www.instagram.com/embed.js" />
-      )}
     </section>
   );
 }

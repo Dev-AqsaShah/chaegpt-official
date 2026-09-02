@@ -4,6 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/sonner";
 import { CartDrawer } from "@/components/cart/CartDrawer";
+import { ChatWidget } from "@/components/chat/ChatWidget";
 
 if (typeof window !== "undefined") {
   const originalError = console.error;
@@ -26,6 +27,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       >
         {children}
         <CartDrawer />
+        <ChatWidget />
         <Toaster richColors position="top-right" />
       </ThemeProvider>
     </SessionProvider>
